@@ -1,24 +1,21 @@
 package com.nys.androiddeveloper.coroutinesample
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import java.util.concurrent.atomic.AtomicLong
 
-const val TAG : String = "MainActivity"
+const val TAG: String = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Log.d(TAG,"Start")
+        /*Log.d(TAG,"Start")
 
         GlobalScope.launch {
             delay(1000)
@@ -29,6 +26,15 @@ class MainActivity : AppCompatActivity() {
             delay(2000)
             Log.d(TAG,"Stop");
 
-        }
+        }*/
+
+        val c = AtomicLong()
+
+        for (i in 1..1_000_000L)
+            GlobalScope.launch {
+                c.addAndGet(i)
+            }
+
+        println(c.get())
     }
 }
